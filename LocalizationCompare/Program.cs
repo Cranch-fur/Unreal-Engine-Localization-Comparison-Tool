@@ -50,6 +50,8 @@ class Program
         JObject baseJson = JObject.Parse(File.ReadAllText(baseFilePath));
         JObject comparisonJson = JObject.Parse(File.ReadAllText(comparisonFilePath));
 
+        string baseFilePrefix = Path.GetFileNameWithoutExtension(baseFilePath);
+        string comparisonFilePrefix = Path.GetFileNameWithoutExtension(comparisonFilePath);
 
         foreach (var baseEntry in baseJson)
         {
@@ -61,7 +63,7 @@ class Program
             {
                 Console.WriteLine();
                 Console.ForegroundColor = baseColor;
-                Console.WriteLine($"[{Path.GetFileNameWithoutExtension(baseFilePath)}] Localization Object Is Missing: \"{key}\"");
+                Console.WriteLine($"[{baseFilePrefix}] Localization Object Is Missing: \"{key}\"");
                 Console.ResetColor();
                 continue;
             }
@@ -70,7 +72,7 @@ class Program
             {
                 Console.WriteLine();
                 Console.ForegroundColor = comparisonColor;
-                Console.WriteLine($"[{Path.GetFileNameWithoutExtension(comparisonFilePath)}] Localization Object Is Missing: \"{key}\"");
+                Console.WriteLine($"[{comparisonFilePrefix}] Localization Object Is Missing: \"{key}\"");
                 Console.ResetColor();
                 continue;
             }
@@ -91,18 +93,18 @@ class Program
                 {
                     Console.WriteLine();
                     Console.ForegroundColor = baseColor;
-                    Console.WriteLine($"[===BASE===] {key} → {propertyKey} → {baseValue}");
+                    Console.WriteLine($"[{baseFilePrefix}] {key} → {propertyKey} → {baseValue}");
                     Console.ForegroundColor = comparisonColor;
-                    Console.WriteLine($"[COMPARISON] Localization Key Is Missing");
+                    Console.WriteLine($"[{comparisonFilePrefix}] Localization Key Is Missing");
                     Console.ResetColor();
                 }
                 else if (baseValue != comparisonValue)
                 {
                     Console.WriteLine();
                     Console.ForegroundColor = baseColor;
-                    Console.WriteLine($"[===BASE===] {key} → {propertyKey} → {baseValue}");
+                    Console.WriteLine($"[{baseFilePrefix}] {key} → {propertyKey} → {baseValue}");
                     Console.ForegroundColor = comparisonColor;
-                    Console.WriteLine($"[COMPARISON] {key} → {propertyKey} → {comparisonValue}");
+                    Console.WriteLine($"[{comparisonFilePrefix}] {key} → {propertyKey} → {comparisonValue}");
                     Console.ResetColor();
                 }
             }
